@@ -1,0 +1,2 @@
+# production_planner_gui
+Самостоятельный планировщик
