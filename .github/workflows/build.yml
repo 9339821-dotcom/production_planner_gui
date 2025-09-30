@@ -1,4 +1,4 @@
-name: Build Windows GUI Application
+name: Build Advanced Production Planner
 
 on:
   push:
@@ -24,18 +24,22 @@ jobs:
         python -m pip install --upgrade pip
         pip install pandas openpyxl numpy matplotlib seaborn tkcalendar pyinstaller
 
-    - name: Build GUI executable
+    - name: Build executable
       run: |
-        pyinstaller --onefile --windowed --name "ProductionPlannerGUI" production_planner_gui.py
+        pyinstaller --onefile --windowed --name "AdvancedProductionPlanner" production_planner_gui.py
 
-    - name: Verify executable exists
+    - name: Verify executable
       run: |
-        echo "Verifying executable creation..."
-        Get-ChildItem "dist"
+        if (Test-Path "dist\AdvancedProductionPlanner.exe") {
+          echo "✅ Executable built successfully!"
+          Get-ChildItem "dist\AdvancedProductionPlanner.exe"
+        } else {
+          echo "❌ Executable not found!"
+          exit 1
+        }
 
-    - name: Upload Windows GUI executable
+    - name: Upload executable
       uses: actions/upload-artifact@v4
       with:
-        name: ProductionPlanner-GUI-Windows
-        path: dist/ProductionPlannerGUI.exe
-        retention-days: 30
+        name: Advanced-Production-Planner
+        path: dist/AdvancedProductionPlanner.exe
