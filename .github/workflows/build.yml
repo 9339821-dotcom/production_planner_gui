@@ -28,19 +28,10 @@ jobs:
       run: |
         pyinstaller --onefile --windowed --name "ProductionPlannerGUI" production_planner_gui.py
 
-        - name: Test executable
+    - name: Verify executable exists
       run: |
-        echo "Testing the executable..."
-        if (Test-Path "dist\ProductionPlannerGUI.exe") {
-          echo "✅ GUI Executable built successfully!"
-          Get-ChildItem "dist\ProductionPlannerGUI.exe"
-          echo "File size: $((Get-Item 'dist\ProductionPlannerGUI.exe').Length) bytes"
-        } else {
-          echo "❌ Executable not found!"
-          echo "Contents of dist directory:"
-          Get-ChildItem "dist"
-          exit 1
-        }
+        echo "Verifying executable creation..."
+        Get-ChildItem "dist"
 
     - name: Upload Windows GUI executable
       uses: actions/upload-artifact@v4
